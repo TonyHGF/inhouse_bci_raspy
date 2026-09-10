@@ -1,0 +1,11 @@
+{
+  "copied_from": "D:\\Projects\\eeg_robot_control\\inhouse_bci_raspy\\src\\inhouse_bci_raspy\\models\\eegnet.py",
+  "sha256": "ba5ab743aa99b2234340216a89e2a98315be334fda2a5bf93841a656c582c2f9",
+  "upstream": {
+    "source": "gitclone_bci_raspy/Offline_EEGNet/EEGNet.py",
+    "source_sha256": "194b03e5474148ce761968fa6a388dadd569f07c3c51b13a9b0697fe4a885616",
+    "integrated_sha256": "4ac74091dc78447537aec885f64e95f70f6af77fd9b279e8a17ada6d7f2d51f5",
+    "previous_integrated_path": "vendor/EEGNet.py"
+  },
+  "note": "Byte-identical snapshot of the existing reference model. No runtime dependency on inhouse_bci_raspy."
+}

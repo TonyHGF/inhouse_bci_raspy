@@ -1,0 +1,10 @@
+{
+  "inhouse": "data",
+  "bci2a": "D:/ServerTransfer/PublicData/bci_competition_iv_2a",
+  "physionet": "D:/ServerTransfer/PublicData/physionet_mi",
+  "cache": "outputs/bci_raspy_experiments/cache",
+  "output": "outputs/bci_raspy_experiments",
+  "device": "cpu",
+  "threads": 4,
+  "workers": 0
+}

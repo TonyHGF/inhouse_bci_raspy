@@ -1,0 +1,10 @@
+{
+  "inhouse": null,
+  "bci2a": null,
+  "physionet": null,
+  "cache": null,
+  "output": null,
+  "device": "cuda:0",
+  "threads": 4,
+  "workers": 0
+}
