@@ -1,0 +1,30 @@
+{
+  "source_vhdr": "./data/hyz_1/hyz_1.vhdr",
+  "bids_root": "outputs/bids",
+  "subject": "01",
+  "session": "01",
+  "task": "imagery",
+  "run": "01",
+  "line_frequency_hz": 50.0,
+  "montage": "standard_1020",
+  "event_map": {
+    "Stimulus/S  5": "imagery_left_hand",
+    "Stimulus/S  6": "imagery_right_hand",
+    "Stimulus/S  7": "imagery_both_hands",
+    "Stimulus/S  8": "imagery_both_feet"
+  },
+  "event_id": {
+    "imagery_left_hand": 5,
+    "imagery_right_hand": 6,
+    "imagery_both_hands": 7,
+    "imagery_both_feet": 8
+  },
+  "expected_event_counts": {
+    "imagery_left_hand": 19,
+    "imagery_right_hand": 19,
+    "imagery_both_hands": 20,
+    "imagery_both_feet": 19
+  },
+  "event_duration_s": 5.0,
+  "end_marker": "Stimulus/S 99"
+}

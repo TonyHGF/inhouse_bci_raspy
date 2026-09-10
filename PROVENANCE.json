@@ -1,0 +1,45 @@
+{
+  "src/inhouse_bci_raspy/preprocessing/brainvision.py": {
+    "source": "scripts/convert_brainvision_to_bids.py",
+    "source_sha256": "7dd271b96954e572cf2c413e6ef57bbf992f2d962ee262850ecae8931eac11fd",
+    "integrated_sha256": "bc3a834d7778df119fb896600ee490529ee3ec8597776619c3936c6fa68898eb",
+    "previous_integrated_path": "convert_brainvision_to_bids.py"
+  },
+  "src/inhouse_bci_raspy/preprocessing/mne_config.py": {
+    "source": "config/pipeline_config.py",
+    "source_sha256": "0cc5dfcaa5b7eea5daf8c8f683ad87c6a2c49b5fde6803585bd2802546f37933",
+    "integrated_sha256": "c70e9160fa4a8bcf6d85d79183235425bb70a3eb431be85b273214a34b838f6a",
+    "previous_integrated_path": "config/pipeline_config.py"
+  },
+  "src/inhouse_bci_raspy/models/eegnet.py": {
+    "source": "gitclone_bci_raspy/Offline_EEGNet/EEGNet.py",
+    "source_sha256": "194b03e5474148ce761968fa6a388dadd569f07c3c51b13a9b0697fe4a885616",
+    "integrated_sha256": "4ac74091dc78447537aec885f64e95f70f6af77fd9b279e8a17ada6d7f2d51f5",
+    "previous_integrated_path": "vendor/EEGNet.py"
+  },
+  "src/inhouse_bci_raspy/training/engine.py": {
+    "source": "gitclone_bci_raspy/Offline_EEGNet/train.py",
+    "source_sha256": "2cc53778fe0eccd8972d73279d10d6466b6807eb976fc16cba2e8177b7db55d9",
+    "integrated_sha256": "5698bba99891e72368063ad02db162da88ce6a43ec68bf8ece04e713ed07be26",
+    "previous_integrated_path": "vendor/train.py"
+  },
+  "src/inhouse_bci_raspy/data/partition.py:partition_data": {
+    "source": "gitclone_bci_raspy/Offline_EEGNet/shared_utils/dataset.py",
+    "source_sha256": "807e45fc29a59e2a77864ff0b5121183b770aaccf36fd2beab0a2bfc93aafc05",
+    "scope": "partition_data operations copied; input adapter and fold RMS/windows from main project",
+    "integrated_sha256": "c47054b159e63915c6adb08f588b7efb4067576194a79aa16ee9beb63102240a",
+    "previous_integrated_path": "data_adapter.py:partition_data"
+  },
+  "config/experiment.yaml:training,model": {
+    "source": "gitclone_bci_raspy/Offline_EEGNet/config.yaml",
+    "source_sha256": "19c57786f7033be7c1e9fbde110a943899e3791d14b507222d7b4f3133b35e92",
+    "integrated_sha256": "d25eed2c9e801f2e6e01868a8f321995a98e887d34386e7421c1f96c7d3444ad",
+    "previous_integrated_path": "config/experiment.yaml:training,model"
+  },
+  "src/inhouse_bci_raspy/training/losses.py": {
+    "source": "gitclone_bci_raspy/Offline_EEGNet/train.py",
+    "source_sha256": "2cc53778fe0eccd8972d73279d10d6466b6807eb976fc16cba2e8177b7db55d9",
+    "integrated_sha256": "6f618a68a8f242fcf8d45073c5ccf8f1875bbc2fcb7c6e2e74b15464fca5a70e",
+    "scope": "Loss definitions extracted without computational changes"
+  }
+}

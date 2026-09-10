@@ -1,0 +1,56 @@
+# Local EEG recordings and generated experiment artifacts.
+# Anchor data/ to the root so src/inhouse_bci_raspy/data/ stays tracked.
+/data/
+/outputs/
+
+# Python bytecode, caches, and test/coverage reports.
+__pycache__/
+*.py[cod]
+.cache/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+.tox/
+.nox/
+
+# Local Python environments and packaging output.
+.venv/
+.venv-*/
+venv/
+env/
+.conda/
+/build/
+/dist/
+*.egg-info/
+.eggs/
+
+# Logs and model checkpoints saved outside outputs/.
+*.log
+*.pt
+*.pth
+*.ckpt
+events.out.tfevents.*
+
+# Machine-specific settings and local secrets; keep example environment files.
+.vscode/
+.idea/
+.env
+.env.*
+!.env.example
+!.env.sample
+!.env.template
+
+# OS/editor temporary files.
+.DS_Store
+Thumbs.db
+Desktop.ini
+~$*
+*.swp
+*.swo
+*~
+*.tmp
