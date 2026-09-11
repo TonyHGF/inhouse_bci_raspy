@@ -1,0 +1,112 @@
+{
+  "overnight-inhouse.tar.gz": {
+    "sources": [
+      "/public/home/hugf2022/inhouse_bci_raspy/overnight-v1/inhouse",
+      "/public/home/hugf2022/inhouse_bci_raspy/overnight-v1/config.json",
+      "/public/home/hugf2022/inhouse_bci_raspy/overnight-v1/reviews"
+    ],
+    "excluded": [],
+    "bytes": 34477406,
+    "sha256": "6c4b66070dd04627c9eabbccf40bedacf0a708238e74501c9c4d8042e0df83a9",
+    "files": 1188,
+    "uncompressed_bytes": 62788360,
+    "symlinks": []
+  },
+  "overnight-bci2a.tar.gz": {
+    "sources": [
+      "/public/home/hugf2022/inhouse_bci_raspy/overnight-v1/bci2a",
+      "/public/home/hugf2022/inhouse_bci_raspy/overnight-v1/config.json"
+    ],
+    "excluded": [],
+    "bytes": 75670861,
+    "sha256": "cb4e92b2c03c4ce9a8b0f93c41479d28fe32734b2fee9f6391d02fb02c24ce94",
+    "files": 1670,
+    "uncompressed_bytes": 138242843,
+    "symlinks": []
+  },
+  "selection-bias-64pct.tar.gz": {
+    "sources": [
+      "/public/home/hugf2022/inhouse_bci_raspy/selection-bias-v1"
+    ],
+    "excluded": [],
+    "bytes": 51651039,
+    "sha256": "c76c86b7a31ce194a6196bf0ff57fb01f41a7803b71bddccd653f396dd56f919",
+    "files": 84,
+    "uncompressed_bytes": 52695216,
+    "symlinks": []
+  },
+  "legacy-local-outputs.tar.gz": {
+    "sources": [
+      "/home_data/home/hugf2022/code/inhouse_bci_raspy/outputs"
+    ],
+    "excluded": [
+      "legacy-local/outputs/bids",
+      "legacy-local/outputs/matplotlib",
+      "legacy-local/outputs/mne_home",
+      "legacy-local/outputs/prepared"
+    ],
+    "bytes": 1400824492,
+    "sha256": "a4f1faa82c3ce841ab752d60a7217fa60a889e242214c5a1ee4acaaf19cdc0c8",
+    "files": 294,
+    "uncompressed_bytes": 1514676172,
+    "symlinks": []
+  },
+  "server-validation.tar.gz": {
+    "sources": [
+      "/public/home/hugf2022/inhouse_bci_raspy/server-v1/results"
+    ],
+    "excluded": [],
+    "bytes": 22094898,
+    "sha256": "970a06723335cfc629ad52dee43d3f5244054ab546a84cbd70d51ddd05ea3cd5",
+    "files": 406,
+    "uncompressed_bytes": 37349774,
+    "symlinks": []
+  },
+  "earlier-validation.tar.gz": {
+    "sources": [
+      "/public/home/hugf2022/inhouse_bci_raspy/overnight-validation-v1",
+      "/public/home/hugf2022/inhouse_bci_raspy/selection-bias-validation-v1",
+      "/public/home/hugf2022/inhouse_bci_raspy/inhouse-comparison-v1",
+      "/public/home/hugf2022/inhouse_bci_raspy/inhouse-comparison-v2"
+    ],
+    "excluded": [
+      "inhouse-comparison-v1/old_pipeline",
+      "inhouse-comparison-v2/prepared"
+    ],
+    "bytes": 65217680,
+    "sha256": "e31da6c73fce53a0433099d9203715e294945c3eb90715efd68275c39f2e83d9",
+    "files": 366,
+    "uncompressed_bytes": 76932547,
+    "symlinks": [
+      {
+        "path": "inhouse-comparison-v2/smoke-validation/prepared",
+        "target": "/public/home/hugf2022/inhouse_bci_raspy/inhouse-comparison-v2/prepared"
+      }
+    ]
+  },
+  "cluster-logs.tar.gz": {
+    "sources": [
+      "/home_data/home/hugf2022/code/inhouse_bci_raspy/logs"
+    ],
+    "excluded": [],
+    "bytes": 29037,
+    "sha256": "ab2c1244eb0324b9e38c04605dad1f645fbef41d422d7660ecf28ff02bdfe931",
+    "files": 68,
+    "uncompressed_bytes": 144644,
+    "symlinks": []
+  },
+  "inhouse-comparison-v3-results-20260911.tar.gz": {
+    "sources": [
+      "/public/home/hugf2022/inhouse_bci_raspy/exports/inhouse-comparison-v3-results-20260911.tar.gz"
+    ],
+    "excluded": [
+      "prepared",
+      "smoke-validation"
+    ],
+    "bytes": 1490248,
+    "sha256": "b113179998fec6e677bbbffc8128219c62215370cad53190875b38d99d815817",
+    "files": 114,
+    "uncompressed_bytes": 3481694,
+    "symlinks": []
+  }
+}
