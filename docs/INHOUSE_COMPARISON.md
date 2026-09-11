@@ -1,56 +1,70 @@
-# Inhouse：统一划分、80%最终训练与预处理对照
+# Inhouse：直接80/20训练与预处理对照
 
-2026-09-11新增。入口：`bash run_inhouse_comparison.sh local|server [config.json]`；默认配置为 `config/inhouse_comparison.json`。仅运行Inhouse，不更改BCI及已经完成的夜间40项实验。此前64%配对结果保留为历史记录，本方案是其80%最终训练后续实验。
+2026-09-11修订。用户明确取消内部验证，因此**没有64%＋16%的内部划分、内部选轮或二次重训**。每折从头到尾用外层80%训练、20%测试。
 
-## 三组共享的协议
+入口：`bash run_inhouse_comparison.sh local|server [config.json]`；默认配置 `config/inhouse_comparison.json`。仅运行Inhouse。此前夜间实验和64%模型选择配对结果保留为历史记录，不能混作当前协议的结果。
 
-先对237个原始trial，按固定seed42做类别分层五折，固定每个trial的session、序号、起始时间和标签。不是在两种清洗后各自重新分折，也不沿用旧235个clean trials或夜间实验各自的折成员。每折外层约80%用于最终训练、20%用于最终评分；预处理剔除后实际数量另行保存。
+## 当前三组
 
-| 组 | 预处理 | 选模型方式 | 最终训练 |
+| 组 | 预处理 | 训练方式 | 评分模型 |
 |---|---|---|---|
-| old_strict | 当前环境重新运行原MNE-BIDS-Pipeline＋CSD | 内部验证选择轮数及学习率序列 | 重新初始化，用完整外层80%重训；无验证/测试回调 |
-| new_strict | 当前新流程：逐trial滤波、训练侧ICA＋CSD | 同上 | 同上 |
-| old_test_selected | 与old_strict相同 | 外层测试accuracy调学习率、loss选checkpoint和早停 | 直接在相同外层80%训练 |
+| old_fixed | 当前环境重新生成的原MNE-BIDS-Pipeline＋CSD | 80%直接训练，固定60轮、Adam学习率0.001 | 第60轮模型 |
+| new_fixed | 逐trial滤波、训练侧ICA＋CSD | 与old_fixed完全相同 | 第60轮模型 |
+| old_test_selected | 与old_fixed相同 | 相同80%训练，最多60轮；外层测试accuracy调学习率、loss控制checkpoint和10轮无改善早停 | 测试选择的checkpoint |
 
-两个strict组在内部选轮阶段仍划成约64%训练、16%验证、20%测试；这只是选轮阶段。选轮结束后，内部验证数据并回最终训练池，预处理的训练侧拟合及RMS也按新的80%训练池重新拟合。最终训练重放内部选出的学习率序列，不读取测试集；选轮和最终模型初始化seed均为42+fold。
+**前两组比较预处理流程，测试集不参与调参、调学习率、早停或选模型。第三组保留原先“测试集参与选择”的诊断用途；它与第一组的差别包含整个测试反馈机制，不是只改最终的准确率汇总方式。**
 
-三组均使用原Raspy EEGNet、1秒31窗、100Hz、32个打散窗口/batch、原窗＋4个固定噪声副本、OneHotMSE、Adam学习率0.001。最大500轮，选择阶段10轮无改善早停。使用同一训练入口、模型初始化与独立sampler RNG；预处理两组各自选出的轮数允许不同。
+三组统一原始trial五折、模型、窗口、batch、增强及初始化；最大训练预算均为60轮。固定组的学习率恒为0.001，不随任何验证指标变化；测试选择组沿用ReduceLROnPlateau。所有组都不对测试数据反向传播。
 
-**old_strict与new_strict比较整套预处理流程。old_strict与old_test_selected比较两种模型选择协议。后者包含选轮后重训与直接选checkpoint的差异，不再是原64%实验中仅切换选择集来源的对照，不能称为纯粹的“偷看test acc”单因素估计。**
+## 划分与相同条件
 
-## 预处理与环境
+先对237个原始trial按seed42做类别分层五折，记录session、原始trial序号、起始时间和标签。每折训练池恰为测试折的补集，代码和配置均禁止内部验证比例。清洗不会触发重新分折。
 
-两套预处理均使用已有 `eeg-preprocessing` 环境（MNE1.11.0、NumPy2.2.6，含MNE-BIDS-Pipeline1.10.1），重新生成旧流程产物，不直接使用历史MNE1.8清洗文件。训练和报告使用现有 `mirepnet`。完整包版本写入manifest；原始缓存和生成文件均保存校验和。
+目前两种预处理的保留身份已核对完全一致：
 
-旧流程仍按连续session、分折前清洗，保留其拟合范围；新流程分别在内部训练/外层训练部分拟合。比较包含滤波边界、ICA拟合范围、检测输入、分段端点与剔除等整体差异，不进一步拆解各环节贡献。旧流程潜在的预处理信息泄漏仍是被比较的流程特点，并未被“严格模型选择”消除。
+| 折 | 保留训练trial | 保留测试trial |
+|---|---:|---:|
+| 0 | 187 | 48 |
+| 1 | 187 | 48 |
+| 2 | 189 | 46 |
+| 3 | 189 | 46 |
+| 4 | 188 | 47 |
 
-主要指标为共同保留外层测试trial上的窗口概率平均准确率，另存各组全部保留trial的成绩、F1、kappa、混淆矩阵、窗口准确率、预测概率和硬投票预测。剔除与保留身份均保存；若训练保留集不同，差异也属于流程结果，不能仅归因于信号数值转换。
+这些是原始80/20划分经过清洗后的数量，共235个保留trial。不能把清洗剔除误读为额外留出内部验证数据。
 
-## 执行、保护与验证
+使用原Raspy EEGNet、1秒31窗、100Hz、32个打散窗口/batch、原窗＋4个固定噪声副本、OneHotMSE、Adam。训练seed为42+fold，独立sampler RNG；每组重置为相同初始化。两组旧预处理还核对训练数组、初始化及第一轮loss完全匹配。
 
-CPU准备 → 单GPU两轮验证 → 单GPU正式训练 → CPU汇总。每张GPU最多2个折进程并发，各折内三组顺序执行。正式共15个最终模型＋10次内部选轮。GPU申请8CPU、24GB系统内存、12小时；CPU准备4CPU、8GB、4小时。
+## 预处理、复用与解释范围
 
-输出根目录：`/public/home/hugf2022/inhouse_bci_raspy/inhouse-comparison-v1/`。
+两套预处理在已有 `eeg-preprocessing` 环境生成：MNE1.11.0、NumPy2.2.6、MNE-BIDS-Pipeline1.10.1。训练和报告使用现有 `mirepnet`。原始缓存、处理结果与软件版本记录在manifest和校验和中。
 
-- `manifest.json`：原始trial身份、五折及内部划分、版本、原始缓存哈希。
-- `old_pipeline/`：当前环境生成的BIDS、MNE清洗日志及产物。
-- `prepared/fold_N/{old,new}/{selection,final}/`：输入窗口与拟合/保留记录。
-- `fold_N/{old_strict,new_strict,old_test_selected}/`：选轮/重训历史、模型、测试预测。
-- `fold_N/pair_verified.json`：两组旧预处理的最终训练输入、初始化、第一轮loss配对验证。
-- `smoke-validation/`：独立的两轮验证结果，不混入正式成绩。
-- `reports/时间戳/`：JSON、CSV、Markdown、PNG/PDF比较图；未完成五折标记provisional。
+旧流程仍在分折前对连续session清洗；新流程仅用对应外层80%拟合ICA与RMS。旧流程RMS也只由该折训练数据拟合。比较包含滤波边界、ICA范围与检测输入、分段端点等整体差异，不将差值进一步拆成各环节贡献。旧session级流程潜在的预处理信息泄漏并未因取消测试选模型而自动消失。
 
-配置和源码身份冻结。准备和GPU队列使用独占锁；重复执行跳过已完成项目，失败训练从初始化重跑，不提供epoch级恢复。不可在作业运行时修改相关Python源码或覆盖旧结果；新科学配置使用新的输出根目录。
+此次直接复用已经生成的**外层80%**数据，不再运行内部阶段：旧MNE清洗来自 `inhouse-comparison-v1/old_pipeline/`，两组80%窗口来自 `inhouse-comparison-v2/prepared/fold_N/{old,new}/final/`。复用前核验原始数据、折成员、拟合身份、保留身份、增强参数/seed、软件版本及NPZ哈希；不读取v2的selection窗口，也不加载其训练模型。
 
-新增轻量测试覆盖80%训练池是否恰好等于非测试数据、RMS不依赖测试信号、refit拒绝验证输入、固定序列重训与直接训练首轮一致。连同原队列及隔离测试共8项通过。GPU验证需另以Slurm实际状态为准。
+## 作业与输出
 
-## 提交记录
+当前输出根目录：`/public/home/hugf2022/inhouse_bci_raspy/inhouse-comparison-v3/`。
+
+CPU核验复用 → GPU两轮验证 → GPU正式五折 → CPU报告。正式共15次模型训练，没有额外内部选轮。单GPU最多两个折进程并发，各折内三组顺序执行。GPU申请8CPU、24GB系统内存、12小时；CPU申请4CPU、8GB。
 
 | 作业ID | 名称 | 分区 | 脚本 | 日志前缀 |
 |---|---|---|---|---|
-| 4107543 | comparison-prepare | bme_cpu | slurm/comparison_cpu.slurm | logs/comparison-prepare_4107543 |
-| 4107544 | comparison-smoke | bme_gpu | slurm/comparison_gpu.slurm | logs/comparison-smoke_4107544 |
-| 4107545 | comparison-train | bme_gpu | slurm/comparison_gpu.slurm | logs/comparison-train_4107545 |
-| 4107546 | comparison-report | bme_cpu | slurm/comparison_cpu.slurm | logs/comparison-report_4107546 |
+| 4107553 | comparison-prepare | bme_cpu | slurm/comparison_cpu.slurm | logs/comparison-prepare_4107553 |
+| 4107554 | comparison-smoke | bme_gpu | slurm/comparison_gpu.slurm | logs/comparison-smoke_4107554 |
+| 4107555 | comparison-train | bme_gpu | slurm/comparison_gpu.slurm | logs/comparison-train_4107555 |
+| 4107556 | comparison-report | bme_cpu | slurm/comparison_cpu.slurm | logs/comparison-report_4107556 |
 
-提交不代表运行完成，实时状态以 `sacct`、日志和结果文件为准。
+提交不等于完成，实时状态以sacct、日志和status.json为准。两轮验证位于独立smoke-validation目录，不混入正式成绩。
+
+结果包含训练历史、checkpoint、逐窗口/逐trial预测，及共同保留trial和各组保留trial两种口径的准确率、F1、kappa、混淆矩阵；保存CSV、JSON、Markdown及PNG/PDF对比图。未完成五折标记provisional。
+
+配置与源码身份冻结，准备和GPU队列使用独占锁。重复执行跳过完成项；失败训练从初始化重新开始，不提供epoch级恢复。运行期间不修改相关Python源码，新科学设置使用新目录。
+
+## 验证与纠错记录
+
+8项轻量测试通过，包括：80%训练池严格等于测试补集且没有内部划分字段、RMS不使用测试信号、固定训练禁止传入选择集、相同训练输入首轮一致，以及原队列保护/隔离测试。
+
+首轮CPU作业4107543完成三段MNE清洗后，因新增衔接代码误将3个misc辅助通道计入EEG而失败；已改为与原脚本一致，只选16个EEG/CSD通道。后续CPU作业4107548成功生成五折数据，耗时2分26秒。用户明确取消内部选轮后，停止GPU验证4107549并取消尚未启动的4107550、4107551；该旧协议没有启动正式五折。当前v3仅使用其已完成的80%预处理数据。
+
+当前v3接入验证已通过：CPU4107553完成（3秒），GPU4107554完成（43秒）。两轮验证中三组均实际使用187个训练trial，两个固定组各训练2轮，固定训练标记为true；旧流程两组的训练数组、初始化与第一轮loss一致。正式4107555已启动fold0和fold1，尚无正式五折成绩。

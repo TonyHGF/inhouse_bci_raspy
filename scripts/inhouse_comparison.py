@@ -1,4 +1,4 @@
-"""Aligned raw-trial fivefold comparison of preprocessing and final 80% training."""
+"""Aligned raw-trial fivefold comparison of preprocessing and direct 80% training."""
 import argparse
 from copy import deepcopy
 from datetime import datetime, timezone
@@ -16,7 +16,7 @@ from bci_raspy_experiments.common import PROJECT, digest, file_hash, read_json, 
 from overnight import immutable
 from selection_bias import array_hash, seeded_loader
 
-ARMS = ('old_strict', 'new_strict', 'old_test_selected')
+ARMS = ('old_fixed', 'new_fixed', 'old_test_selected')
 
 
 def config(path):
@@ -27,6 +27,8 @@ def config(path):
         raise ValueError('Output must be under /public/home/hugf2022')
     if not set(c['folds']) <= set(range(5)) or len(set(c['folds'])) != len(c['folds']) or not c['folds']:
         raise ValueError('Invalid folds')
+    if c.get('design') != 'direct_outer_80' or 'inner_validation_fraction' in c:
+        raise ValueError('Only direct 80/20 training; internal validation is forbidden')
     for k in ('max_epochs', 'parallel_per_gpu', 'threads_per_process'):
         if c[k] < 1: raise ValueError(k)
     return c
@@ -39,13 +41,12 @@ def source_hash():
     return digest({str(p.relative_to(PROJECT)):file_hash(p) for p in paths})
 
 
-def aligned_splits(labels, seed, fraction):
+def aligned_splits(labels, seed):
     import numpy as np
-    from sklearn.model_selection import StratifiedKFold, train_test_split
+    from sklearn.model_selection import StratifiedKFold
     result = []
     for fold, (outer, test) in enumerate(StratifiedKFold(5, shuffle=True, random_state=seed).split(np.zeros(len(labels)), labels)):
-        train, val = train_test_split(outer, test_size=fraction, stratify=np.asarray(labels)[outer], random_state=seed+fold)
-        result.append(dict(fold=fold, training=train.tolist(), validation=val.tolist(), outer_training=outer.tolist(), test=test.tolist()))
+        result.append(dict(fold=fold, outer_training=outer.tolist(), test=test.tolist()))
     return result
 
 
@@ -54,11 +55,25 @@ def old_trials(c, catalog, legacy):
     import numpy as np
     from inhouse_bci_raspy.preprocessing.pipeline import preprocess
     root = Path(c['output_root'])
+    pipeline_root = Path(c.get('reuse_old_pipeline_root', root/'old_pipeline'))
     dataset = read_json(c['dataset_config'])
-    dataset['bids_root'] = str(root/'old_pipeline'/'bids')
-    marker = root/'old_pipeline'/'complete.json'
-    if not marker.exists():
-        preprocess(legacy, dataset, root/'old_pipeline')
+    dataset['bids_root'] = str(pipeline_root/'bids')
+    marker = pipeline_root/'complete.json'
+    if 'reuse_old_pipeline_root' in c:
+        if not marker.exists(): raise ValueError('Reusable pipeline did not finish')
+        previous = read_json(pipeline_root.parent/'legacy_config.json')
+        if previous['recordings'] != legacy['recordings']:
+            raise ValueError('Reusable pipeline recordings differ')
+        if read_json(marker)['mne'] != importlib.metadata.version('mne'):
+            raise ValueError('Reusable pipeline MNE version differs')
+        for rec in legacy['recordings']:
+            old_cfg = read_json(pipeline_root/'preprocessing'/f"{rec['id']}.json")
+            for key,value in dataset.items():
+                if key not in ('source_vhdr','bids_root','session','expected_event_counts') and old_cfg.get(key)!=value:
+                    raise ValueError('Reusable pipeline dataset configuration differs: '+key)
+        immutable(root/'reused_pipeline.json',dict(root=str(pipeline_root),origin=read_json(marker)))
+    elif not marker.exists():
+        preprocess(legacy, dataset, pipeline_root)
         immutable(marker, dict(source_hash=source_hash(), mne=importlib.metadata.version('mne')))
     elif read_json(marker)['source_hash'] != source_hash():
         raise ValueError('Preprocessing source changed')
@@ -66,11 +81,12 @@ def old_trials(c, catalog, legacy):
     rows = {(r['session'], r['trial']): (i,r) for i,r in enumerate(catalog['trials'])}
     for rec in legacy['recordings']:
         name = f"sub-{dataset['subject']}_ses-{rec['session']}_task-{dataset['task']}_proc-clean_epo.fif"
-        path = root/'old_pipeline'/'bids'/'derivatives'/'mne-bids-pipeline'/f"sub-{dataset['subject']}"/f"ses-{rec['session']}"/'eeg'/name
+        path = pipeline_root/'bids'/'derivatives'/'mne-bids-pipeline'/f"sub-{dataset['subject']}"/f"ses-{rec['session']}"/'eeg'/name
         ep = mne.read_epochs(path, preload=True, verbose='error')[list(dataset['event_id'])]
         inverse = {v:k for k,v in ep.event_id.items()}
         labels = [list(dataset['event_id']).index(inverse[int(v)]) for v in ep.events[:,2]]
         ep = mne.preprocessing.compute_current_source_density(ep, copy=True)
+        ep.pick(mne.pick_types(ep.info, csd=True, eeg=True, exclude=[]))
         expected = catalog['trials'][0]['channels']
         if ep.ch_names != expected or ep.info['sfreq'] != 250 or ep.tmin != -2:
             raise ValueError('Old pipeline channel/time layout changed')
@@ -104,16 +120,20 @@ def prepare(c):
         rows = catalog['trials']; labels = np.asarray([r['label'] for r in rows])
         legacy = read_json(c['legacy_config']); legacy['training']['max_epochs'] = c['max_epochs']
         immutable(root/'legacy_config.json', legacy)
-        splits = aligned_splits(labels,c['seed'],c['inner_validation_fraction'])
-        immutable(root/'manifest.json', dict(trials=rows,splits=splits,arms=ARMS,
+        splits = aligned_splits(labels,c['seed'])
+        immutable(root/'manifest.json', dict(trials=rows,splits=splits,arms=list(ARMS),
                   raw_sha256=file_hash(Path(c['raw_cache'])/'inhouse'/'raw.h5'),
                   preprocessing_packages={p:importlib.metadata.version(p) for p in ('mne','mne-bids','mne-bids-pipeline','numpy','scipy')}))
+        if c.get('reuse_final_prepared_root'):
+            reuse_final_blocks(c,root,rows,splits,legacy)
+            save_json(root/'prepared.json',dict(state='complete',folds=c['folds'],reused=True))
+            return
         old = old_trials(c,catalog,legacy)
         for split in splits:
             fold=split['fold']
             if fold not in c['folds']: continue
             for method in ('old','new'):
-                for stage, fit_key, eval_key in [('selection','training','validation'), ('final','outer_training','test')]:
+                for stage, fit_key, eval_key in [('final','outer_training','test')]:
                     out=root/'prepared'/f'fold_{fold}'/method/stage
                     if (out/'complete.json').exists(): continue
                     out.mkdir(parents=True,exist_ok=True)
@@ -146,6 +166,51 @@ def prepare(c):
         save_json(root/'prepared.json',dict(state='complete',folds=c['folds']))
 
 
+def reuse_final_blocks(c, root, rows, splits, legacy):
+    """Reuse only the already fitted outer-80% data, never inner-selection inputs."""
+    previous=Path(c['reuse_final_prepared_root'])
+    manifest=read_json(previous/'manifest.json')
+    previous_config=read_json(previous/'config.json')
+    if read_json(previous/'prepared.json')['state']!='complete': raise ValueError('Incomplete source preparation')
+    if manifest['trials']!=rows or manifest['raw_sha256']!=read_json(root/'manifest.json')['raw_sha256']:
+        raise ValueError('Raw identities/data changed')
+    if previous_config['seed']!=c['seed']: raise ValueError('Augmentation seed changed')
+    previous_settings=read_json(previous/'legacy_config.json')
+    if any(previous_settings[k]!=legacy[k] for k in ('window','model','recordings')):
+        raise ValueError('Prepared data settings changed')
+    expected_packages=read_json(root/'manifest.json')['preprocessing_packages']
+    if manifest['preprocessing_packages']!=expected_packages: raise ValueError('Preprocessing environment changed')
+    records=[]
+    for split in splits:
+        fold=split['fold']
+        if fold not in c['folds']: continue
+        old_split=next(s for s in manifest['splits'] if s['fold']==fold)
+        if any(old_split[k]!=split[k] for k in ('outer_training','test')): raise ValueError('Outer split changed')
+        retained=[]
+        for method in ('old','new'):
+            source=previous/'prepared'/f'fold_{fold}'/method/'final'
+            meta=read_json(source/'complete.json')
+            if meta['requested']!={'train':split['outer_training'],'eval':split['test']}:
+                raise ValueError('Prepared identities differ from outer split')
+            if method=='new':
+                if meta['preprocessing']['fit_ids']!=[rows[i]['id'] for i in split['outer_training']]:
+                    raise ValueError('New pipeline was not fitted on the outer 80%')
+            elif meta['preprocessing']['retained_fit_ids']!=meta['retained']['train']:
+                raise ValueError('Old RMS fitting identities disagree')
+            for name in ('train','eval'):
+                if file_hash(source/f'{name}.npz')!=meta['checksums'][name]: raise ValueError('Prepared data checksum changed')
+            target=root/'prepared'/f'fold_{fold}'/method/'final'
+            target.parent.mkdir(parents=True,exist_ok=True)
+            if target.exists():
+                if target.resolve()!=source.resolve(): raise ValueError('Unexpected cache destination')
+            else: target.symlink_to(source,target_is_directory=True)
+            retained.append(meta['retained'])
+            records.append(dict(fold=fold,method=method,source=str(source),metadata_sha256=file_hash(source/'complete.json'),checksums=meta['checksums']))
+        if retained[0]!=retained[1]: raise ValueError('Preprocessing comparison requires matching retained training/test identities')
+        print(f'Reused fold={fold}: train={len(retained[0]["train"])} test={len(retained[0]["eval"])}; no inner stage',flush=True)
+    immutable(root/'reused_preparation.json',dict(source=str(previous),source_manifest_sha256=file_hash(previous/'manifest.json'),records=records))
+
+
 def load_block(root,fold,method,stage,name):
     import numpy as np
     out=root/'prepared'/f'fold_{fold}'/method/stage
@@ -155,7 +220,7 @@ def load_block(root,fold,method,stage,name):
 
 
 def fit_model(block, evaluation, settings, seed, target, fixed_schedule=None, device_name='cuda:0'):
-    """Same window optimizer for all arms. Fixed refit cannot accept an evaluation block."""
+    """Same window optimizer for all arms. Fixed training cannot accept an evaluation block."""
     import numpy as np
     import torch
     from inhouse_bci_raspy.runtime import setup_training
@@ -163,7 +228,7 @@ def fit_model(block, evaluation, settings, seed, target, fixed_schedule=None, de
     from inhouse_bci_raspy.training.losses import load_loss_criterion
     from inhouse_bci_raspy.training.engine import test
     if (evaluation is None) != (fixed_schedule is not None):
-        raise ValueError('Refit requires a fixed schedule and no evaluation data')
+        raise ValueError('Fixed training requires a predetermined schedule and no evaluation data')
     target.mkdir(parents=True,exist_ok=True)
     device=setup_training(seed,device_name)
     model=EEGNet(settings['model'],output_dim=4,n_electrodes=16).to(device)
@@ -207,7 +272,7 @@ def fit_model(block, evaluation, settings, seed, target, fixed_schedule=None, de
     result=dict(initial_state_hash=initial,first_training_loss=history[0]['train_loss'],
                 training_X_sha256=array_hash(block['X']),training_y_sha256=array_hash(block['y']),
                 train_trials=sorted(np.unique(block['trial_index']).tolist()),epochs=len(history),best_epoch=best_epoch+1,
-                schedule=[r['lr'] for r in history[:best_epoch+1]],refit=fixed_schedule is not None,
+                schedule=[r['lr'] for r in history[:best_epoch+1]],fixed_training=fixed_schedule is not None,
                 selection_hit_cap=selection is not None and len(history)==limit)
     save_json(target/'training.json',result)
     return model,result
@@ -223,15 +288,11 @@ def run_fold(c,fold):
         out=root/f'fold_{fold}'/arm; out.mkdir(parents=True,exist_ok=True)
         if (out/'status.json').exists() and read_json(out/'status.json')['state']=='complete': continue
         save_json(out/'status.json',dict(state='running')); start=time.monotonic()
-        method='new' if arm=='new_strict' else 'old'
+        method='new' if arm=='new_fixed' else 'old'
         try:
-            schedule=None
-            if arm.endswith('strict'):
-                tr=load_block(root,fold,method,'selection','train'); val=load_block(root,fold,method,'selection','eval')
-                model,info=fit_model(tr,val,settings,c['seed']+fold,out/'selection')
-                schedule=info['schedule']; del tr,val,model
+            schedule=None if arm=='old_test_selected' else [settings['training']['learning_rate']]*c['max_epochs']
             tr=load_block(root,fold,method,'final','train')
-            # Strict refit has no test array in scope. The test-selected arm deliberately supplies it.
+            # Fixed training has no test array in scope. The test-selected arm deliberately supplies it.
             selection=load_block(root,fold,method,'final','eval') if arm=='old_test_selected' else None
             model,info=fit_model(tr,selection,settings,c['seed']+fold,out/'final',fixed_schedule=schedule)
             del tr,selection
@@ -243,7 +304,7 @@ def run_fold(c,fold):
             del model,test_block,p
         except BaseException as exc:
             save_json(out/'status.json',dict(state='failed',error=str(exc))); raise
-    a,b=[read_json(root/f'fold_{fold}'/arm/'final'/'training.json') for arm in ('old_strict','old_test_selected')]
+    a,b=[read_json(root/f'fold_{fold}'/arm/'final'/'training.json') for arm in ('old_fixed','old_test_selected')]
     for key in ('initial_state_hash','training_X_sha256','training_y_sha256','train_trials'):
         if a[key]!=b[key]: raise ValueError('Unmatched final training: '+key)
     if not np.isclose(a['first_training_loss'],b['first_training_loss'],rtol=0,atol=1e-7): raise ValueError('First epoch mismatch')
@@ -277,8 +338,8 @@ def report(c):
     if common:
         summary['common_metrics']={a:metrics(v,common) for a,v in trials.items()}
         summary['retained_metrics']={a:metrics(v,sorted(v)) for a,v in trials.items()}
-        summary['preprocessing_new_minus_old']=summary['common_metrics']['new_strict']['accuracy']-summary['common_metrics']['old_strict']['accuracy']
-        summary['test_selection_minus_strict']=summary['common_metrics']['old_test_selected']['accuracy']-summary['common_metrics']['old_strict']['accuracy']
+        summary['preprocessing_new_minus_old']=summary['common_metrics']['new_fixed']['accuracy']-summary['common_metrics']['old_fixed']['accuracy']
+        summary['test_selection_minus_fixed']=summary['common_metrics']['old_test_selected']['accuracy']-summary['common_metrics']['old_fixed']['accuracy']
         for a,v in trials.items(): save_json(out/f'{a}_trials.json',v)
         with (out/'folds.csv').open('w',newline='') as f:
             w=csv.DictWriter(f,fieldnames=list(rows[0]),lineterminator='\n'); w.writeheader(); w.writerows(rows)
@@ -290,8 +351,8 @@ def report(c):
         plt.close(fig)
     save_json(out/'summary.json',summary)
     lines=['# Aligned Inhouse fivefold comparison','',f'Complete folds: {len(c["folds"])-len(missing)}/{len(c["folds"])}; provisional={summary["provisional"]}',
-           '', 'All final models train on the retained outer 80%. Strict models use inner selection then fresh refit. Old preprocessing is session-wide before splitting; new preprocessing fits training data only.',
-           '', 'This selection-protocol comparison includes selection/refit versus direct test-selected fitting; it is not a selection-source-only paired estimate.', '', '| Arm | Common trial accuracy | N |','|---|---:|---:|']
+           '', 'All models train directly on the retained outer 80%. No inner split, selection or refit exists in the fixed arms; their schedule is predetermined. Old preprocessing is session-wide before splitting; new preprocessing fits training data only.',
+           '', 'The test-selected reference uses test feedback for scheduling, checkpoint selection and early stopping. Compare old_fixed with new_fixed to isolate preprocessing; neither fixed arm uses test feedback.', '', '| Arm | Common trial accuracy | N |','|---|---:|---:|']
     for a,m in summary.get('common_metrics',{}).items(): lines.append(f'| {a} | {m["accuracy"]:.2%} | {m["n"]} |')
     (out/'report.md').write_text('\n'.join(lines)+'\n'); print('REPORT',out,flush=True)
     if missing or not common: raise SystemExit(1)

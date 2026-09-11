@@ -5,7 +5,7 @@
 BrainVision → MNE 清洗 → CSD → GitClone trial 分层五折 → EEGNet。
 只处理运动想象四类，不再使用此前固定的 80/20 train/test NPZ。
 
-当前后续实验：[Inhouse统一划分、80%最终训练与预处理对照](docs/INHOUSE_COMPARISON.md)。
+当前后续实验：[Inhouse直接80/20训练与预处理对照](docs/INHOUSE_COMPARISON.md)。
 
 ## 环境与运行
 

@@ -1,12 +1,20 @@
 {
-  "output_root": "/public/home/hugf2022/inhouse_bci_raspy/inhouse-comparison-v1",
+  "output_root": "/public/home/hugf2022/inhouse_bci_raspy/inhouse-comparison-v3",
   "legacy_config": "outputs/cv/experiment.json",
   "dataset_config": "config/dataset.json",
   "raw_cache": "/public/home/hugf2022/inhouse_bci_raspy/server-v1/cache",
-  "inner_validation_fraction": 0.2,
   "seed": 42,
-  "folds": [0, 1, 2, 3, 4],
-  "max_epochs": 500,
+  "folds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "max_epochs": 60,
   "parallel_per_gpu": 2,
-  "threads_per_process": 4
+  "threads_per_process": 4,
+  "reuse_old_pipeline_root": "/public/home/hugf2022/inhouse_bci_raspy/inhouse-comparison-v1/old_pipeline",
+  "design": "direct_outer_80",
+  "reuse_final_prepared_root": "/public/home/hugf2022/inhouse_bci_raspy/inhouse-comparison-v2"
 }

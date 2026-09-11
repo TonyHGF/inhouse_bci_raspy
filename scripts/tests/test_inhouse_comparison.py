@@ -9,11 +9,11 @@ from inhouse_comparison import aligned_splits, normalize_old, fit_model, read_js
 
 class AlignmentTests(unittest.TestCase):
     def test_outer_training_is_entire_non_test_pool(self):
-        splits=aligned_splits(np.tile(np.arange(4),60),42,.2)
+        splits=aligned_splits(np.tile(np.arange(4),60),42)
         tests=[]
         for s in splits:
-            self.assertEqual(set(s['outer_training']),set(s['training'])|set(s['validation']))
-            self.assertFalse(set(s['training'])&set(s['validation']))
+            self.assertEqual(set(s),{'fold','outer_training','test'})
+            self.assertEqual(set(s['outer_training']),set(range(240))-set(s['test']))
             self.assertFalse(set(s['outer_training'])&set(s['test']))
             self.assertEqual(len(s['outer_training']),192)
             tests+=s['test']
@@ -26,7 +26,7 @@ class AlignmentTests(unittest.TestCase):
         self.assertEqual(ma,mb)
         np.testing.assert_array_equal(a[0],b[0])
 
-    def test_refit_has_no_selection_and_matches_first_epoch(self):
+    def test_fixed_training_has_no_selection_and_matches_first_epoch(self):
         rng=np.random.default_rng(7)
         block={'X':rng.normal(size=(8,16,100,1)).astype('float32'), 'y':np.tile(np.arange(4),2), 'trial_index':np.arange(8)}
         settings=read_json(PROJECT/'outputs/cv/experiment.json'); settings['training']['max_epochs']=2
