@@ -1,0 +1,75 @@
+{
+  "completed_pairs": 5,
+  "expected_pairs": 5,
+  "missing_folds": [],
+  "provisional": false,
+  "rows": [
+    {
+      "fold": 0,
+      "validation_selected_trial_accuracy": 0.7708333333333334,
+      "validation_selected_window_accuracy": 0.5940860215053764,
+      "validation_selected_best_epoch": 17,
+      "validation_selected_epochs": 27,
+      "test_selected_trial_accuracy": 0.7708333333333334,
+      "test_selected_window_accuracy": 0.5940860215053764,
+      "test_selected_best_epoch": 17,
+      "test_selected_epochs": 27,
+      "test_selected_minus_validation_selected": 0.0
+    },
+    {
+      "fold": 1,
+      "validation_selected_trial_accuracy": 0.6666666666666666,
+      "validation_selected_window_accuracy": 0.5860215053763441,
+      "validation_selected_best_epoch": 3,
+      "validation_selected_epochs": 13,
+      "test_selected_trial_accuracy": 0.7916666666666666,
+      "test_selected_window_accuracy": 0.5920698924731183,
+      "test_selected_best_epoch": 35,
+      "test_selected_epochs": 45,
+      "test_selected_minus_validation_selected": 0.125
+    },
+    {
+      "fold": 2,
+      "validation_selected_trial_accuracy": 0.5833333333333334,
+      "validation_selected_window_accuracy": 0.5013440860215054,
+      "validation_selected_best_epoch": 22,
+      "validation_selected_epochs": 32,
+      "test_selected_trial_accuracy": 0.625,
+      "test_selected_window_accuracy": 0.5389784946236559,
+      "test_selected_best_epoch": 9,
+      "test_selected_epochs": 19,
+      "test_selected_minus_validation_selected": 0.04166666666666663
+    },
+    {
+      "fold": 3,
+      "validation_selected_trial_accuracy": 0.5869565217391305,
+      "validation_selected_window_accuracy": 0.5021037868162693,
+      "validation_selected_best_epoch": 43,
+      "validation_selected_epochs": 53,
+      "test_selected_trial_accuracy": 0.5869565217391305,
+      "test_selected_window_accuracy": 0.49859747545582045,
+      "test_selected_best_epoch": 33,
+      "test_selected_epochs": 43,
+      "test_selected_minus_validation_selected": 0.0
+    },
+    {
+      "fold": 4,
+      "validation_selected_trial_accuracy": 0.5777777777777777,
+      "validation_selected_window_accuracy": 0.5003584229390681,
+      "validation_selected_best_epoch": 3,
+      "validation_selected_epochs": 13,
+      "test_selected_trial_accuracy": 0.5777777777777777,
+      "test_selected_window_accuracy": 0.46953405017921146,
+      "test_selected_best_epoch": 10,
+      "test_selected_epochs": 20,
+      "test_selected_minus_validation_selected": 0.0
+    }
+  ],
+  "preprocessing": "Frozen historical session-level MNE-BIDS cleaning + CSD; shared training-only RMS.",
+  "interpretation": "Selection-source diagnostic with matched training sets, not an unbiased estimate of population optimism; not an exact reproduction of the old 80%-training baseline.",
+  "pooled_trial_accuracy": {
+    "validation_selected": 0.6382978723404256,
+    "test_selected": 0.6723404255319149
+  },
+  "paired_difference": 0.0340425531914893
+}

@@ -1,0 +1,14 @@
+{
+  "output_root": "/public/home/hugf2022/inhouse_bci_raspy/selection-bias-v1",
+  "legacy_cache": "outputs/prepared/clean_trials.h5",
+  "legacy_folds": "outputs/prepared/folds.json",
+  "legacy_config": "outputs/cv/experiment.json",
+  "legacy_bids_root": "outputs/bids/derivatives/mne-bids-pipeline",
+  "design": "matched_training",
+  "inner_validation_fraction": 0.2,
+  "seed": 42,
+  "folds": [0, 1, 2, 3, 4],
+  "max_epochs": 500,
+  "parallel_per_gpu": 2,
+  "threads_per_process": 4
+}

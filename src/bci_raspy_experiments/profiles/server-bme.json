@@ -1,0 +1,10 @@
+{
+  "inhouse": "/home_data/home/hugf2022/code/inhouse_bci_raspy/data",
+  "bci2a": "/public/home/hugf2022/motor/eeg-sim/data/raw/bci_competition_iv_2a",
+  "physionet": "/public/home/hugf2022/motor/eeg-sim/data/raw/physionet_mi",
+  "cache": "/public/home/hugf2022/inhouse_bci_raspy/server-v1/cache",
+  "output": "/public/home/hugf2022/inhouse_bci_raspy/server-v1/results",
+  "device": "cuda:0",
+  "threads": 4,
+  "workers": 0
+}

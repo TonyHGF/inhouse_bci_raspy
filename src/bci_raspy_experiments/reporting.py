@@ -19,9 +19,9 @@ def write_csv(path, rows):
         writer.writerows(rows)
 
 
-def report(output):
+def report(output, destination=None):
     output = Path(output)
-    destination = output / 'reports'
+    destination = Path(destination) if destination is not None else output / 'reports'
     destination.mkdir(parents=True, exist_ok=True)
     records, groups = [], defaultdict(list)
     for path in sorted((output / 'runs').glob('*/metrics.json')):

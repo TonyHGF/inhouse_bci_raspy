@@ -1,0 +1,358 @@
+[
+  {
+    "dataset": "inhouse",
+    "label": "no_augmentation",
+    "trial_accuracy": 0.6382978723404256,
+    "between_subject_std": 0.0,
+    "runs": 5,
+    "selection_epochs": [
+      51,
+      40,
+      38,
+      36,
+      24
+    ],
+    "refit_epochs": [
+      41,
+      30,
+      28,
+      26,
+      14
+    ],
+    "epoch_caps": 0
+  },
+  {
+    "dataset": "inhouse",
+    "label": "no_csd",
+    "trial_accuracy": 0.5957446808510638,
+    "between_subject_std": 0.0,
+    "runs": 5,
+    "selection_epochs": [
+      51,
+      39,
+      38,
+      44,
+      49
+    ],
+    "refit_epochs": [
+      41,
+      29,
+      28,
+      34,
+      39
+    ],
+    "epoch_caps": 0
+  },
+  {
+    "dataset": "inhouse",
+    "label": "raspy_mil",
+    "trial_accuracy": 0.3404255319148936,
+    "between_subject_std": 0.0,
+    "runs": 5,
+    "selection_epochs": [
+      12,
+      11,
+      11,
+      27,
+      11
+    ],
+    "refit_epochs": [
+      2,
+      1,
+      1,
+      17,
+      1
+    ],
+    "epoch_caps": 0
+  },
+  {
+    "dataset": "inhouse",
+    "label": "no_ica",
+    "trial_accuracy": 0.5957446808510638,
+    "between_subject_std": 0.0,
+    "runs": 5,
+    "selection_epochs": [
+      31,
+      55,
+      40,
+      36,
+      33
+    ],
+    "refit_epochs": [
+      21,
+      45,
+      30,
+      26,
+      23
+    ],
+    "epoch_caps": 0
+  },
+  {
+    "dataset": "inhouse",
+    "label": "standard_window",
+    "trial_accuracy": 0.5872340425531914,
+    "between_subject_std": 0.0,
+    "runs": 5,
+    "selection_epochs": [
+      51,
+      36,
+      27,
+      36,
+      11
+    ],
+    "refit_epochs": [
+      41,
+      26,
+      17,
+      26,
+      1
+    ],
+    "epoch_caps": 0
+  },
+  {
+    "dataset": "inhouse",
+    "label": "raspy_whole",
+    "trial_accuracy": 0.225531914893617,
+    "between_subject_std": 0.0,
+    "runs": 5,
+    "selection_epochs": [
+      11,
+      11,
+      12,
+      12,
+      12
+    ],
+    "refit_epochs": [
+      1,
+      1,
+      2,
+      2,
+      2
+    ],
+    "epoch_caps": 0
+  },
+  {
+    "dataset": "inhouse",
+    "label": "standard_deep",
+    "trial_accuracy": 0.6297872340425532,
+    "between_subject_std": 0.0,
+    "runs": 5,
+    "selection_epochs": [
+      28,
+      52,
+      41,
+      36,
+      33
+    ],
+    "refit_epochs": [
+      18,
+      42,
+      31,
+      26,
+      23
+    ],
+    "epoch_caps": 0
+  },
+  {
+    "dataset": "inhouse",
+    "label": "raspy_window",
+    "trial_accuracy": 0.5957446808510638,
+    "between_subject_std": 0.0,
+    "runs": 5,
+    "selection_epochs": [
+      31,
+      55,
+      40,
+      36,
+      33
+    ],
+    "refit_epochs": [
+      21,
+      45,
+      30,
+      26,
+      23
+    ],
+    "epoch_caps": 0
+  },
+  {
+    "dataset": "bci2a",
+    "label": "raspy_mil",
+    "trial_accuracy": 0.6381172839506173,
+    "between_subject_std": 0.1548226798782866,
+    "runs": 9,
+    "selection_epochs": [
+      44,
+      23,
+      26,
+      14,
+      37,
+      25,
+      38,
+      38,
+      20
+    ],
+    "refit_epochs": [
+      34,
+      13,
+      16,
+      4,
+      27,
+      15,
+      28,
+      28,
+      10
+    ],
+    "epoch_caps": 0
+  },
+  {
+    "dataset": "bci2a",
+    "label": "standard_mil",
+    "trial_accuracy": 0.6311728395061729,
+    "between_subject_std": 0.1764033010432643,
+    "runs": 9,
+    "selection_epochs": [
+      41,
+      23,
+      26,
+      40,
+      34,
+      14,
+      30,
+      40,
+      19
+    ],
+    "refit_epochs": [
+      31,
+      13,
+      16,
+      30,
+      24,
+      4,
+      20,
+      30,
+      9
+    ],
+    "epoch_caps": 0
+  },
+  {
+    "dataset": "bci2a",
+    "label": "standard_window",
+    "trial_accuracy": 0.6493055555555556,
+    "between_subject_std": 0.14952521166406166,
+    "runs": 9,
+    "selection_epochs": [
+      45,
+      36,
+      45,
+      43,
+      60,
+      32,
+      56,
+      52,
+      49
+    ],
+    "refit_epochs": [
+      35,
+      26,
+      35,
+      33,
+      53,
+      22,
+      46,
+      42,
+      39
+    ],
+    "epoch_caps": 1
+  },
+  {
+    "dataset": "bci2a",
+    "label": "raspy_whole",
+    "trial_accuracy": 0.6801697530864197,
+    "between_subject_std": 0.10151517962779552,
+    "runs": 9,
+    "selection_epochs": [
+      37,
+      28,
+      57,
+      39,
+      32,
+      25,
+      41,
+      36,
+      36
+    ],
+    "refit_epochs": [
+      27,
+      18,
+      47,
+      29,
+      22,
+      15,
+      31,
+      26,
+      26
+    ],
+    "epoch_caps": 0
+  },
+  {
+    "dataset": "bci2a",
+    "label": "standard_whole",
+    "trial_accuracy": 0.6975308641975309,
+    "between_subject_std": 0.09875940375120901,
+    "runs": 9,
+    "selection_epochs": [
+      52,
+      49,
+      57,
+      35,
+      24,
+      32,
+      32,
+      39,
+      56
+    ],
+    "refit_epochs": [
+      42,
+      39,
+      47,
+      25,
+      14,
+      22,
+      22,
+      29,
+      46
+    ],
+    "epoch_caps": 0
+  },
+  {
+    "dataset": "bci2a",
+    "label": "raspy_window",
+    "trial_accuracy": 0.589891975308642,
+    "between_subject_std": 0.1662517698186707,
+    "runs": 9,
+    "selection_epochs": [
+      37,
+      31,
+      49,
+      34,
+      51,
+      14,
+      58,
+      60,
+      34
+    ],
+    "refit_epochs": [
+      27,
+      21,
+      39,
+      24,
+      41,
+      4,
+      48,
+      53,
+      24
+    ],
+    "epoch_caps": 1
+  }
+]

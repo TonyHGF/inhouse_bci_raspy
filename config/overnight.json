@@ -1,0 +1,12 @@
+{
+  "base_profile": "src/bci_raspy_experiments/profiles/server-bme.json",
+  "source_manifest": "/public/home/hugf2022/inhouse_bci_raspy/server-v1/results/manifests/all-all.json",
+  "output_root": "/public/home/hugf2022/inhouse_bci_raspy/overnight-v1",
+  "seed": 42,
+  "max_epochs": 60,
+  "threads_per_process": 4,
+  "parallel_per_gpu": 2,
+  "training_hours": 10,
+  "inhouse": ["raspy_window", "standard_window", "standard_deep", "raspy_mil", "raspy_whole", "no_augmentation", "no_ica", "no_csd"],
+  "bci2a": ["raspy_window", "standard_window", "raspy_mil", "standard_mil", "raspy_whole", "standard_whole"]
+}

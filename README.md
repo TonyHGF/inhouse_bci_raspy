@@ -1,5 +1,7 @@
 # inhouse_bci_raspy
 
+服务器实验已完成，见 [2026-09-11 结果汇总](docs/RESULTS_2026-09-11.md)（Inhouse 五折、BCI-IV2a 六配置、模型选择配对）。运行入口见 [夜间实验](docs/OVERNIGHT.md) 和 [配对实验](docs/SELECTION_BIAS.md)。
+
 BrainVision → MNE 清洗 → CSD → GitClone trial 分层五折 → EEGNet。
 只处理运动想象四类，不再使用此前固定的 80/20 train/test NPZ。
 

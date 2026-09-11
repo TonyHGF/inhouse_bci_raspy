@@ -106,10 +106,12 @@ def run_task(task, catalog, profile, resume=False):
     with os.fdopen(fd, 'w') as f:
         f.write(f'{platform.node()} pid={os.getpid()}')
     started = time.monotonic()
-    if profile['device'].startswith('cuda'):
-        torch.cuda.reset_peak_memory_stats(torch.device(profile['device']))
-    save_json(destination / 'status.json', dict(state='running', started=time.time()))
     try:
+        save_json(destination / 'status.json', dict(state='running', started=time.time()))
+        if profile['device'].startswith('cuda'):
+            # Initialize the CUDA context before querying allocator statistics.
+            torch.cuda.set_device(torch.device(profile['device']))
+            torch.cuda.reset_peak_memory_stats(torch.device(profile['device']))
         split = cfg['split']
         train_ids, test_ids = list(split['train']), list(split['test'])
         if cfg['selection'] == 'strict':

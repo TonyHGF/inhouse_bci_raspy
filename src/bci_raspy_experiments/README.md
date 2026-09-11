@@ -5,6 +5,8 @@
 
 ## 快速使用
 
+BME 服务器使用新增的 `run_experiments.sh` 和 `profiles/server-bme.json`；完整提交、恢复和结果路径见 [服务器运行手册](../../docs/SERVER_EXPERIMENTS.md)。下文 `server.json` 仍为通用空模板。
+
 从 `inhouse_bci_raspy` 项目目录执行，使用满足项目根目录 pyproject.toml 依赖的环境（Python 3.10/3.11）。
 
 Windows PowerShell：
@@ -175,7 +177,7 @@ python -B -m unittest discover -s tests -v
 MIL梯度/置换不变性、固定噪声/预算、test标签/信号扰动、选择集驱动checkpoint变化、精确epoch恢复、
 真实样例接入、预测往返及共同trial报告。真实数据路径不在本机时，相应样例测试会明确 skip。
 本地验证日志与 smoke 产物在 `outputs/bci_raspy_experiments/verification` 和 `outputs/bci_raspy_experiments/smoke`；
-旧文件完整哈希核验另存验证目录，正式服务器运行尚未执行。
+旧文件完整哈希核验另存验证目录。上述为早期验收记录；截至2026-09-11，服务器精简正式实验已完成，见 [结果汇总](../../docs/RESULTS_2026-09-11.md)。
 
 ## 当前代码位置
 

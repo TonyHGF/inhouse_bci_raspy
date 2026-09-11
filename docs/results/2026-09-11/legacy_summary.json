@@ -1,0 +1,51 @@
+{
+  "pooled": {
+    "trials": 235,
+    "window_percent": 54.399450926561435,
+    "soft_percent": 69.7872340425532,
+    "hard_percent": 68.93617021276596,
+    "hard_ties": 0
+  },
+  "by_fold": [
+    {
+      "fold": 0,
+      "trials": 48,
+      "window_percent": 58.602150537634415,
+      "soft_percent": 79.16666666666666,
+      "hard_percent": 77.08333333333334,
+      "hard_ties": 0
+    },
+    {
+      "fold": 1,
+      "trials": 48,
+      "window_percent": 61.08870967741935,
+      "soft_percent": 79.16666666666666,
+      "hard_percent": 81.25,
+      "hard_ties": 0
+    },
+    {
+      "fold": 2,
+      "trials": 48,
+      "window_percent": 49.93279569892473,
+      "soft_percent": 64.58333333333334,
+      "hard_percent": 64.58333333333334,
+      "hard_ties": 0
+    },
+    {
+      "fold": 3,
+      "trials": 46,
+      "window_percent": 51.89340813464236,
+      "soft_percent": 58.69565217391305,
+      "hard_percent": 58.69565217391305,
+      "hard_ties": 0
+    },
+    {
+      "fold": 4,
+      "trials": 45,
+      "window_percent": 50.10752688172043,
+      "soft_percent": 66.66666666666666,
+      "hard_percent": 62.22222222222222,
+      "hard_ties": 0
+    }
+  ]
+}

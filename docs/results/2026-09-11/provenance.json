@@ -1,0 +1,52 @@
+{
+  "overnight_summary.json": {
+    "source": "/public/home/hugf2022/inhouse_bci_raspy/overnight-v1/reviews/20260911T010721Z/summary.json",
+    "sha256": "0aecd0aab4873483e3402c00a15827a2dca6a8f7053ffae4f7b27d88497eb186"
+  },
+  "selection_bias_summary.json": {
+    "source": "/public/home/hugf2022/inhouse_bci_raspy/selection-bias-v1/reports/20260911T013823934100Z/summary.json",
+    "sha256": "343c8390a995d3b36b1a963d8ef770ec361161e2ae3ab444f2df4ab85247cce1"
+  },
+  "selection_bias_folds.csv": {
+    "source": "/public/home/hugf2022/inhouse_bci_raspy/selection-bias-v1/reports/20260911T013823934100Z/paired_folds.csv",
+    "source_sha256": "9e5e0a4401a55164a4d1961517bab9485368300133db8892a9c6f3fe07090321",
+    "transformation": "Preserve all CSV fields; normalize line endings to LF",
+    "snapshot_sha256": "02bbb07a543963a57c2b391c165b4a634a09ac46ab15c23a9ba82ede5cc99661"
+  },
+  "inhouse_training_audit.json": {
+    "source": "/public/home/hugf2022/inhouse_bci_raspy/overnight-v1/reviews/20260911T010721Z/inhouse_training_audit.json",
+    "sha256": "a0050e992fe53e3e0d4571a5a48711181fbfd32628ab6d33ed60f107503b3ae2"
+  },
+  "bci2a_training_audit.json": {
+    "source": "/public/home/hugf2022/inhouse_bci_raspy/overnight-v1/reviews/20260911T010721Z/bci2a_training_audit.json",
+    "sha256": "8055b20b6c5ae3a908b3e18789e0e69c0d185658e1e9b45fa99e4d3ed636b885"
+  },
+  "legacy_summary.json": {
+    "source": "outputs/analysis/aggregation/summary.json",
+    "source_sha256": "4b9f15d4157dcae7f60193d319dab1c214b317a068a5c64c5f05fb450cb596e7",
+    "extracted_keys": [
+      "pooled",
+      "by_fold"
+    ]
+  },
+  "inhouse_runs.csv": {
+    "source": "/public/home/hugf2022/inhouse_bci_raspy/overnight-v1/inhouse/reports/20260910T181604747237Z/runs.csv",
+    "source_sha256": "805b5517a77833fc8cf8b950750f706e0c936d4cbc249246b9c82a8dbaf07553",
+    "transformation": "Add configuration labels from completion.json; normalize line endings to LF",
+    "snapshot_sha256": "6a3d34502d47bb896f8ad3e206f424f8ddc6b405807f914e02cc1d39663404e9"
+  },
+  "inhouse_completion.json": {
+    "source": "/public/home/hugf2022/inhouse_bci_raspy/overnight-v1/inhouse/reports/20260910T181604747237Z/completion.json",
+    "sha256": "d09275a73f8a319b541451a7ddaec116b0ea366027e2e86dd016d6bb78afd881"
+  },
+  "bci2a_runs.csv": {
+    "source": "/public/home/hugf2022/inhouse_bci_raspy/overnight-v1/bci2a/reports/20260910T232126627110Z/runs.csv",
+    "source_sha256": "1cd240596ad08c3a24fa8b7fc2e8038d4aa95c5203ab2697c52b5b358ae7730d",
+    "transformation": "Add configuration labels from completion.json; normalize line endings to LF",
+    "snapshot_sha256": "f3654c059b8115bd5f174e75c66fa5574b2eec536df0c25932daa58893ae98b9"
+  },
+  "bci2a_completion.json": {
+    "source": "/public/home/hugf2022/inhouse_bci_raspy/overnight-v1/bci2a/reports/20260910T232126627110Z/completion.json",
+    "sha256": "37536db6f6aa1a9aa0ca2b5b9e41eaed4165f4dfcf42b419b68ec8182d5ff555"
+  }
+}

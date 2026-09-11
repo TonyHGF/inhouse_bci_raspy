@@ -2,6 +2,7 @@
 # Anchor data/ to the root so src/inhouse_bci_raspy/data/ stays tracked.
 /data/
 /outputs/
+/logs/
 
 # Python bytecode, caches, and test/coverage reports.
 __pycache__/
