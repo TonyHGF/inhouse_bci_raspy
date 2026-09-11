@@ -5,6 +5,8 @@
 BrainVision → MNE 清洗 → CSD → GitClone trial 分层五折 → EEGNet。
 只处理运动想象四类，不再使用此前固定的 80/20 train/test NPZ。
 
+当前后续实验：[Inhouse统一划分、80%最终训练与预处理对照](docs/INHOUSE_COMPARISON.md)。
+
 ## 环境与运行
 
 请自行创建并激活新的 conda 环境，Python 使用 **3.10 或 3.11**。本项目不创建环境。
