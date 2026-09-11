@@ -1,0 +1,50 @@
+{
+  "comparison.pdf": {
+    "source": "/public/home/hugf2022/inhouse_bci_raspy/inhouse-comparison-v3/reports/20260911T031725186216Z/comparison.pdf",
+    "sha256": "9872da8850ff326b00c922d15872ee528afb491854b486017cd0ec6a3556bfe4"
+  },
+  "comparison.png": {
+    "source": "/public/home/hugf2022/inhouse_bci_raspy/inhouse-comparison-v3/reports/20260911T031725186216Z/comparison.png",
+    "sha256": "4449a82c70f71dcb48fa87eba9d0bd5824dccfc225566423d39873250c6ff01d"
+  },
+  "folds.csv": {
+    "source": "/public/home/hugf2022/inhouse_bci_raspy/inhouse-comparison-v3/reports/20260911T031725186216Z/folds.csv",
+    "sha256": "3557a45376918e58aa68b5d2ca62d8fd1f693d055f7942888ae857ee32eaafa4"
+  },
+  "new_fixed_trials.json": {
+    "source": "/public/home/hugf2022/inhouse_bci_raspy/inhouse-comparison-v3/reports/20260911T031725186216Z/new_fixed_trials.json",
+    "sha256": "3849f541b35e9547e6077025c6d9f0d4c8fcf66167a7e47270e2aab53925d908"
+  },
+  "old_fixed_trials.json": {
+    "source": "/public/home/hugf2022/inhouse_bci_raspy/inhouse-comparison-v3/reports/20260911T031725186216Z/old_fixed_trials.json",
+    "sha256": "154c8f5d382e93dcdd0b098139f8b269569a60f1a25894e8f9de9f598fcf2109"
+  },
+  "old_test_selected_trials.json": {
+    "source": "/public/home/hugf2022/inhouse_bci_raspy/inhouse-comparison-v3/reports/20260911T031725186216Z/old_test_selected_trials.json",
+    "sha256": "b876d0e257f1f542c8cb1a1e3b1d07b67d03725e423f03c72a6ec9e4c01b61fa"
+  },
+  "report.md": {
+    "source": "/public/home/hugf2022/inhouse_bci_raspy/inhouse-comparison-v3/reports/20260911T031725186216Z/report.md",
+    "sha256": "d595e7c12f62baf51440a6b1c73838e7bed49604aa021f54a2f4f7aaab6da65c"
+  },
+  "summary.json": {
+    "source": "/public/home/hugf2022/inhouse_bci_raspy/inhouse-comparison-v3/reports/20260911T031725186216Z/summary.json",
+    "sha256": "f9c3c9fc73deb3aa5a00f3c6a3131e5cd3d4cde0ee21dcc1a2b2d6daf2b56bfc"
+  },
+  "config.json": {
+    "source": "/public/home/hugf2022/inhouse_bci_raspy/inhouse-comparison-v3/config.json",
+    "sha256": "8b6fde68744665d434d4c0e97d7e45b440980a2768abca3804c2ef96c333ef23"
+  },
+  "manifest.json": {
+    "source": "/public/home/hugf2022/inhouse_bci_raspy/inhouse-comparison-v3/manifest.json",
+    "sha256": "12072118d2f8a62a5241336b743a7243a57bf4c8584e8552b6640d1582c1f700"
+  },
+  "reused_preparation.json": {
+    "source": "/public/home/hugf2022/inhouse_bci_raspy/inhouse-comparison-v3/reused_preparation.json",
+    "sha256": "8d91aedbe9ce7e1bd41f75951c65954cbda42d71432da9a985ec59c02f3a5fdd"
+  },
+  "source.json": {
+    "source": "/public/home/hugf2022/inhouse_bci_raspy/inhouse-comparison-v3/source.json",
+    "sha256": "5bd146242f465ff72d0b378d9cc1215e7939e42d5dcf073360f4043fea4a50db"
+  }
+}

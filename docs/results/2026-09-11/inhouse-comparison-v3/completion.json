@@ -1,0 +1,112 @@
+{
+  "training_job": 4107555,
+  "report_job": 4107556,
+  "training_elapsed": "00:38:55",
+  "folds": {
+    "0": {
+      "pair": {
+        "identical_old_final_training": true,
+        "identical_initialization": true,
+        "equal_first_epoch": true
+      },
+      "arms": {
+        "old_fixed": {
+          "state": "complete",
+          "seconds": 339.18994517099054
+        },
+        "new_fixed": {
+          "state": "complete",
+          "seconds": 336.65325151100114
+        },
+        "old_test_selected": {
+          "state": "complete",
+          "seconds": 272.4811712630035
+        }
+      }
+    },
+    "1": {
+      "pair": {
+        "identical_old_final_training": true,
+        "identical_initialization": true,
+        "equal_first_epoch": true
+      },
+      "arms": {
+        "old_fixed": {
+          "state": "complete",
+          "seconds": 338.803775709006
+        },
+        "new_fixed": {
+          "state": "complete",
+          "seconds": 336.5681976850028
+        },
+        "old_test_selected": {
+          "state": "complete",
+          "seconds": 103.50807837799948
+        }
+      }
+    },
+    "2": {
+      "pair": {
+        "identical_old_final_training": true,
+        "identical_initialization": true,
+        "equal_first_epoch": true
+      },
+      "arms": {
+        "old_fixed": {
+          "state": "complete",
+          "seconds": 342.4731388450018
+        },
+        "new_fixed": {
+          "state": "complete",
+          "seconds": 338.5636983889999
+        },
+        "old_test_selected": {
+          "state": "complete",
+          "seconds": 164.58556500000122
+        }
+      }
+    },
+    "3": {
+      "pair": {
+        "identical_old_final_training": true,
+        "identical_initialization": true,
+        "equal_first_epoch": true
+      },
+      "arms": {
+        "old_fixed": {
+          "state": "complete",
+          "seconds": 344.4231318689999
+        },
+        "new_fixed": {
+          "state": "complete",
+          "seconds": 335.10400556800596
+        },
+        "old_test_selected": {
+          "state": "complete",
+          "seconds": 246.40108888999384
+        }
+      }
+    },
+    "4": {
+      "pair": {
+        "identical_old_final_training": true,
+        "identical_initialization": true,
+        "equal_first_epoch": true
+      },
+      "arms": {
+        "old_fixed": {
+          "state": "complete",
+          "seconds": 320.01324959700287
+        },
+        "new_fixed": {
+          "state": "complete",
+          "seconds": 287.0715677940025
+        },
+        "old_test_selected": {
+          "state": "complete",
+          "seconds": 82.84340970299672
+        }
+      }
+    }
+  }
+}

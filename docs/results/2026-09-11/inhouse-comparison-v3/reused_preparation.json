@@ -1,0 +1,106 @@
+{
+  "source": "/public/home/hugf2022/inhouse_bci_raspy/inhouse-comparison-v2",
+  "source_manifest_sha256": "d26d8a48255142bb16e4ee23622a500313cffbc949e80c2a53accec099d0a19a",
+  "records": [
+    {
+      "fold": 0,
+      "method": "old",
+      "source": "/public/home/hugf2022/inhouse_bci_raspy/inhouse-comparison-v2/prepared/fold_0/old/final",
+      "metadata_sha256": "3818896dbb0fcb0f9e88ffaea03ddca4da6ae78205c3c9e6e95b7b6a209b86a2",
+      "checksums": {
+        "train": "cb7eb03eb83ba12fa4cde7dfc6ba9ab45625037a2084442e89eefa59e2ac6409",
+        "eval": "4116a55ab469f64e3a319b599bb3bc0c32291f4cd91830a4e21a4cb327ad474f"
+      }
+    },
+    {
+      "fold": 0,
+      "method": "new",
+      "source": "/public/home/hugf2022/inhouse_bci_raspy/inhouse-comparison-v2/prepared/fold_0/new/final",
+      "metadata_sha256": "dc8c18624d1d50352bb3cf9505b327136e6eb051ce70c223c18611afc762aa14",
+      "checksums": {
+        "train": "eeadde42bd65ff0eaa02879dcbd07f3383162c5de7bc45fedc2fd3b6b21989e4",
+        "eval": "6f021d411daa5a678fcfdddf862edec6cbfdca6ae3b1a2b55fc2b91c094264d7"
+      }
+    },
+    {
+      "fold": 1,
+      "method": "old",
+      "source": "/public/home/hugf2022/inhouse_bci_raspy/inhouse-comparison-v2/prepared/fold_1/old/final",
+      "metadata_sha256": "21154fc6f5a011ca4e2cd46fe1be8acb2c26da9295db61316e721623a256c8f1",
+      "checksums": {
+        "train": "a0d5e4b404e4365682d37a20a4d332e2a4bb371d7ae170d9b7488c880d7f85f0",
+        "eval": "11960b67472cd26dd3c6367e3fcd142bc2bd16ecb3faff3456a68077009fdee9"
+      }
+    },
+    {
+      "fold": 1,
+      "method": "new",
+      "source": "/public/home/hugf2022/inhouse_bci_raspy/inhouse-comparison-v2/prepared/fold_1/new/final",
+      "metadata_sha256": "9a97c911f9c937df31ee0dac40020925f677ab87bf062cde9ec9f02d6e967336",
+      "checksums": {
+        "train": "7dc6534417cd11729615e89b39ce8e7d62b88de6f0bc31043cd2a63640fe9cdd",
+        "eval": "f7c5b3c90a6342c835d563324af5c9685c2c0e29f312af8f80374d9d6d130886"
+      }
+    },
+    {
+      "fold": 2,
+      "method": "old",
+      "source": "/public/home/hugf2022/inhouse_bci_raspy/inhouse-comparison-v2/prepared/fold_2/old/final",
+      "metadata_sha256": "05d88056e303e4952f17116f186e55726db5d5a36c33ecfd455365dcc71ae1ff",
+      "checksums": {
+        "train": "1409f1820dec408f07992cb32d75e461d22e5a2539db99195a1dc2a18eed4e41",
+        "eval": "20722fbfa01fba1b4a7e6695095f605647a72b862f3bb938225a51ec12d136e3"
+      }
+    },
+    {
+      "fold": 2,
+      "method": "new",
+      "source": "/public/home/hugf2022/inhouse_bci_raspy/inhouse-comparison-v2/prepared/fold_2/new/final",
+      "metadata_sha256": "f07739628a1167b26ae4b5cc5952dd0908eb4926254a4e73eaff613f1341eb60",
+      "checksums": {
+        "train": "766982f9362cea9e361a55d5d18b3d899b1d15164a6c0bc84c3c64615496e076",
+        "eval": "b1dd969a0c963812c768b1c5fb260958730c1aa0ad881ea83b542b5acb9f6f3a"
+      }
+    },
+    {
+      "fold": 3,
+      "method": "old",
+      "source": "/public/home/hugf2022/inhouse_bci_raspy/inhouse-comparison-v2/prepared/fold_3/old/final",
+      "metadata_sha256": "7a63b6a25423d3d93d52da85ae255ff6561cd0d9d6a4200d4e6ba88ac80cd6c0",
+      "checksums": {
+        "train": "06f3a26afbb3c5f9a3cc0ebc3c7a93d964dfa0e018586c9346cf5d951467d7fa",
+        "eval": "6ee9924661e0fa4c004a28af1cbb60efe7d2a36b52d40ab82fe898de76bd1f9a"
+      }
+    },
+    {
+      "fold": 3,
+      "method": "new",
+      "source": "/public/home/hugf2022/inhouse_bci_raspy/inhouse-comparison-v2/prepared/fold_3/new/final",
+      "metadata_sha256": "6f0bf9829fddb61d302070d08280e2a868a7baf3ec385b13f7fec8647c877813",
+      "checksums": {
+        "train": "4c8194cd653d46434920e5215d4144758ca7ce88f09b7927ee607cb1b8ba0911",
+        "eval": "881d82677d838447a20af411c0b9ae6742490c001c712aa7c048d11dc6065745"
+      }
+    },
+    {
+      "fold": 4,
+      "method": "old",
+      "source": "/public/home/hugf2022/inhouse_bci_raspy/inhouse-comparison-v2/prepared/fold_4/old/final",
+      "metadata_sha256": "019ba1637d7ead706f846329dee8edba48412d388dc3bac95e64fc0fe142e226",
+      "checksums": {
+        "train": "8cd4d6107515b7ab681f1977e0c6733f1ca175cf5425f33064bb4bf393f838cb",
+        "eval": "4357ddebfd102f26efc9a54ed824e5564442490447528a5dcbaa1ac3932591e7"
+      }
+    },
+    {
+      "fold": 4,
+      "method": "new",
+      "source": "/public/home/hugf2022/inhouse_bci_raspy/inhouse-comparison-v2/prepared/fold_4/new/final",
+      "metadata_sha256": "580341f617ebdd6a274b71bb200234b4738d3fad42986aa10c39e8aabf5293c3",
+      "checksums": {
+        "train": "4ac96d6bf8acf5ffeea2e9126e203e8992675c53d5a8e020a3016b47474804dd",
+        "eval": "885dd64ad4ebb31783d823604f3bd343c646387a650fa7cbfe1ea697e5702206"
+      }
+    }
+  ]
+}
